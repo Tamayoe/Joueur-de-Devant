@@ -13,8 +13,17 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import com.example.joueurdedevant.Evaluation.Categorie;
 
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class EvaluationTypeActivity extends AppCompatActivity {
 
+    //Database
+    private AppDatabase db;
+    private EvaluationDAO dao;
+
+    //Interface
     private MaterialToolbar toolbar;
     private TextInputLayout textinput;
     private RadioGroup radio;
@@ -23,6 +32,9 @@ public class EvaluationTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluation_type);
+
+        this.db =  AppDatabase.getInstance(this);
+        this.dao = db.evaluationDAO();
 
         //COMPOSANTS
         toolbar = findViewById(R.id.toolbar);
@@ -38,7 +50,7 @@ public class EvaluationTypeActivity extends AppCompatActivity {
     }
 
     public void onCreate(View v) {
-        Log.i("EvaluationTypeActivity","Starting evaluation creation process");
+        Log.d("Activity : Controller","Starting evaluation creation process");
         //Recuperation des entrées utilisateur
         String clubname = textinput.getEditText().getText().toString();
         int checkedRadioId = radio.getCheckedRadioButtonId();
@@ -63,6 +75,23 @@ public class EvaluationTypeActivity extends AppCompatActivity {
         //Création de l'objet evaluation
         Evaluation evaluation = new Evaluation(clubname, categorie);
         System.out.println(evaluation);
+
+        //Insertion en base de données
+        this.dao.insertEval(evaluation)
+                .subscribeOn(Schedulers.io())
+                .subscribe(new DisposableCompletableObserver() {
+                               @Override
+                               public void onComplete() {
+                                   Log.d("Activity : Database","Insertion réussie");
+                               }
+
+                               @Override
+                               public void onError(@NonNull Throwable e) {
+                                   Log.d("Activity : Database","Echec de l'insertion");
+                               }
+                           }
+                );
+
 
     }
 }

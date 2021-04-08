@@ -48,16 +48,16 @@ public class ListEvaluationActivity extends AppCompatActivity {
                        }
                    }
         );
-        Log.d("ListEvaluationActivity","eval1.id = "+Integer.toString(eval1.getId()));
+        Log.d("Activity : Controller","eval1.id = "+Integer.toString(eval1.getId()));
 
         dao.getAllEval()
             .subscribeOn(Schedulers.io())
             .subscribe(res -> {
-                Log.d("ListEvaluationActivity","Recuperation en bdd");
-                Log.d("ListEvaluationActivity",res.size()+" résultats : ");
+                Log.d("Activity : Database","Recuperation en bdd");
+                Log.d("Activity : Database",res.size()+" résultats : ");
                 for (Evaluation r : res) {
-                    Log.d("ListEvaluationActivity",r.toString());
-                    Log.d("ListEvaluationActivity","Categorie id : "+r.getCategorie().getId());
+                    Log.d("Activity : Database",r.toString());
+                    Log.d("Activity : Database","Categorie id : "+r.getCategorie().getId());
 
                 }
             },error -> System.err.println("The error message is: " + error.getMessage()));
