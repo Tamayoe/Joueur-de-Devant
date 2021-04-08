@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- THEME -->
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+        <style name="NoActionBar" parent="android:style/Theme.Holo.Light">
+            <item name="android:windowActionBar">false</item>
+            <item name="android:windowNoTitle">true</item>
+        </style>
+    <!-- STYLE -->
+    <style name="text" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+    <style name="toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="titleTextColor">@color/black</item>
+    </style>
+    <style name="text_1_black" parent="text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="text_2_black" parent="text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+</resources>

@@ -1,0 +1,26 @@
+package com.example.joueurdedevant;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    public void onCommencer(View v) {
+        Intent intent = new Intent(this, EvaluationTypeActivity.class);
+        startActivity(intent);
+    }
+
+    public void onCompleter(View v) {
+        Intent intent = new Intent(this, ListEvaluationActivity.class);
+        startActivity(intent);
+    }
+}
