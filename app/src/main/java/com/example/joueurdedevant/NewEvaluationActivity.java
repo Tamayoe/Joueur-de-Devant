@@ -17,7 +17,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EvaluationTypeActivity extends AppCompatActivity {
+public class NewEvaluationActivity extends AppCompatActivity {
 
     //Database
     private AppDatabase db;

@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JoueurDeDevant">
-        <activity android:name=".EvaluationTypeActivity"></activity>
+        <activity android:name=".NewEvaluationActivity"></activity>
         <activity android:name=".ListEvaluationActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
