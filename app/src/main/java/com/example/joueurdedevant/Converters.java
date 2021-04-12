@@ -2,6 +2,7 @@ package com.example.joueurdedevant;
 
 import androidx.room.TypeConverter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Converters {
@@ -19,12 +20,20 @@ public class Converters {
 
     //DATE
         @TypeConverter
-        public static Date fromTimestamp(Long value) {
-            return value == null ? null : new Date(value);
+        public static LocalDateTime toDate(String dateString) {
+            if (dateString == null) {
+                return null;
+            } else {
+                return LocalDateTime.parse(dateString);
+            }
         }
 
         @TypeConverter
-        public static Long toTimestamp(Date date) {
-            return date == null ? null : date.getTime();
+        public static String toDateString(LocalDateTime date) {
+            if (date == null) {
+                return null;
+            } else {
+                return date.toString();
+            }
         }
 }

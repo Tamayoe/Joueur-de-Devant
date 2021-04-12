@@ -14,6 +14,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -43,45 +46,24 @@ public class ListEvaluationActivity extends AppCompatActivity {
         this.db = AppDatabase.getInstance(this);
         this.dao = db.evaluationDAO();
 
+        fetchData();
+    }
 
-        //Evaluation eval1 = new Evaluation("Polo Scopo", Evaluation.Categorie.M15F);
-
-        Log.d("ListEvaluationActivity","Insertion en bdd");
-        /*
-        dao.insertEval(eval1)
-        .subscribeOn(Schedulers.io())
-        .subscribe(new DisposableCompletableObserver() {
-                       @Override
-                       public void onComplete() {
-                           Log.d("ListEvaluationActivity","Insertion réussie");
-                       }
-
-                       @Override
-                       public void onError(@NonNull Throwable e) {
-                           Log.d("ListEvaluationActivity","Echec de l'insertion");
-                       }
-                   }
-        );
-        Log.d("Activity : Controller","eval1.id = "+Integer.toString(eval1.getId()));
-         */
-
-        dao.getAllEval()
-            .subscribeOn(Schedulers.io())
-            .subscribe(res -> {
-                Log.d("Activity : Database","Recuperation en bdd");
-                Log.d("Activity : Database",res.size()+" résultats : ");
-                for (Evaluation r : res) {
-                    Log.d("Activity : Database",r.toString());
-                    Log.d("Activity : Database","Categorie id : "+r.getCategorie().getId());
-                }
-                Boolean notEmpty = evaluations.addAll(res);
-                if(notEmpty) {
-                    Log.d("Activity : Database", "Données récupérés");
-                    setRecyclerViewContent(evaluations);
-                } else {
-                    Log.d("Activity : Database", "Données vides");
-                }
-            },error -> System.err.println("The error message is: " + error.getMessage()));
+    public Disposable fetchData() {
+        return dao.getAllEval()
+                .subscribeOn(Schedulers.io())
+                .subscribe(res -> {
+                    Log.d("Activity : Database","Recuperation en bdd");
+                    Log.d("Activity : Database",res.size()+" résultats : ");
+                    Boolean notEmpty = evaluations.addAll(res);
+                    if(notEmpty) {
+                        Log.d("Activity : Database", "Données convertis avec succès");
+                        setRecyclerViewContent(evaluations);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        Log.d("Activity : Database", "Données non convertis");
+                    }
+                },error -> System.err.println("The error message is: " + error.getMessage()));
     }
 
     public void setRecyclerViewContent(LinkedList<Evaluation> linkedList) {

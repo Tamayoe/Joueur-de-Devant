@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
-@Database(entities = {Evaluation.class}, version = 1, exportSchema = false)
+@Database(entities = {Evaluation.class}, version = 2, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;

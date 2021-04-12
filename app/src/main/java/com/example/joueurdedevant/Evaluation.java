@@ -2,6 +2,7 @@ package com.example.joueurdedevant;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -15,25 +16,23 @@ public class Evaluation {
 
     private Categorie categorie;
 
-    private Date date;
+    private LocalDateTime date;
 
     public Evaluation() {}
 
     public Evaluation(String cl, Categorie ca) {
-        //Generation d'instances
-        Calendar currentTime = Calendar.getInstance();
 
         //Definition des variables
         this.club = cl;
         this.categorie = ca;
-        this.date = currentTime.getTime();
+        this.date = LocalDateTime.now();
     }
 
     public Evaluation(String cl, Categorie ca, Date d) {
         //Definition des variables
         this.club = cl;
         this.categorie = ca;
-        this.date = d;
+        this.date = LocalDateTime.now();
     }
 
     public void setId(int id) {
@@ -56,11 +55,11 @@ public class Evaluation {
         this.categorie = categorie;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
