@@ -1,14 +1,17 @@
 package com.example.joueurdedevant;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.LinkedList;
@@ -36,7 +39,6 @@ public class EvaluationListAdapter extends RecyclerView.Adapter<EvaluationListAd
 
         public final TextView evaluationItemClubname;
         public final TextView evaluationItemCategory;
-        public final TextView evaluationItemDate;
         public final Button evaluationItemDelete;
 
         final EvaluationListAdapter adapter;
@@ -45,7 +47,6 @@ public class EvaluationListAdapter extends RecyclerView.Adapter<EvaluationListAd
             super(itemView);
             evaluationItemClubname = itemView.findViewById(R.id.clubname);
             evaluationItemCategory = itemView.findViewById(R.id.category);
-            evaluationItemDate = itemView.findViewById(R.id.date);
             evaluationItemDelete = itemView.findViewById(R.id.delete);
             this.adapter = adapter;
 
@@ -54,19 +55,30 @@ public class EvaluationListAdapter extends RecyclerView.Adapter<EvaluationListAd
                 int position = getAdapterPosition();
 
                 if(position != RecyclerView.NO_POSITION) {
-                    Log.d("Activity : Layout","Delete item n°"+position);
                     Evaluation clickedEvaluation = evaluationList.get(position);
                     Log.d("Activity : Layout",clickedEvaluation.toString());
-                    dao.deleteEval(clickedEvaluation)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(() -> {
-                                        evaluationList.remove(position);
-                                        adapter.notifyItemRemoved(position);
-                                        Log.d("Adapter : Database","Supression réussie");
-                                    },
-                                    throwable -> Log.e("Erreur de suppression",throwable.getMessage())
-                            );
+
+                    new AlertDialog.Builder(itemView.getContext())
+                            .setTitle("Attention :")
+                            .setMessage("Voulez-vous vraiment supprimer l'evaluation "+clickedEvaluation.getCategorie()+" du club "+clickedEvaluation.getClub())
+                            .setIcon(android.R.drawable.ic_menu_delete)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    Toast.makeText(itemView.getContext(), "Evaluation Supprimée", Toast.LENGTH_SHORT).show();
+                                    Log.d("Activity : Layout","Delete item n°"+position);
+                                    dao.deleteEval(clickedEvaluation)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(() -> {
+                                                        evaluationList.remove(position);
+                                                        adapter.notifyItemRemoved(position);
+                                                        Log.d("Adapter : Database","Supression réussie");
+                                                    },
+                                                    throwable -> Log.e("Erreur de suppression",throwable.getMessage())
+                                            );
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
                 }
             });
         }
@@ -85,8 +97,7 @@ public class EvaluationListAdapter extends RecyclerView.Adapter<EvaluationListAd
         Log.d("RecyclerView","Item n°"+position+" : "+ evaluationList.toString());
 
         holder.evaluationItemClubname.setText(e.getClub());
-        holder.evaluationItemCategory.setText(e.getCategorie().toString());
-        holder.evaluationItemDate.setText(e.getDate().toString());
+        holder.evaluationItemCategory.setText("Evaluation "+e.getCategorie().toString()+" du "+e.getDate().getDayOfMonth()+"/"+e.getDate().getMonthValue()+"/"+e.getDate().getYear());
     }
 
     @Override

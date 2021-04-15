@@ -59,30 +59,37 @@
             android:layout_margin="15dp"
             style="@style/text_1_black"/>
         <View style="@style/divider"/>
+
         <RadioGroup
             android:id="@+id/radiogroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:id="@+id/m14g"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:text="M14G"
+                android:onClick="onRadioButtonClicked"
                 style="@style/text_2_black">
             </RadioButton>
             <RadioButton
+                android:id="@+id/m15f"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:text="M15F"
+                android:onClick="onRadioButtonClicked"
                 style="@style/text_2_black">
             </RadioButton>
             <RadioButton
+                android:id="@+id/senior"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:text="Senior"
+                android:onClick="onRadioButtonClicked"
                 style="@style/text_2_black">
             </RadioButton>
         </RadioGroup>

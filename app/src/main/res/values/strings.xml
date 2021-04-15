@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Joueur de Devant</string>
+    <string name="app_import">Importer</string>
+    <string name="app_import_description">Importer un fichier depuis le stockage de l\'appareil</string>
 </resources>

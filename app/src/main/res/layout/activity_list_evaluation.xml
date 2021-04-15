@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListEvaluationActivity">
+    tools:context=".ListEvaluationActivity"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:liftOnScroll="true">
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             style="@style/toolbar"
             app:title="Liste des Evaluations"
-            app:navigationIcon="@drawable/ic_back"/>
-
+            app:navigationIcon="@drawable/ic_back"
+            app:menu="@menu/list_app_bar"/>
     </com.google.android.material.appbar.AppBarLayout>
+
+    <View style="@style/divider"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         app:layout_constraintTop_toBottomOf="@+id/appBar"
-        android:layout_marginTop="54dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </androidx.recyclerview.widget.RecyclerView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
